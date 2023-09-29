@@ -34,6 +34,8 @@ router.post('/message/:id/update', message_controller.message_update_post);
 router.get('/messages', message_controller.message_list);
 router.get('/message/:id', message_controller.message_detail);
 
+
+
 module.exports = router;
 
 

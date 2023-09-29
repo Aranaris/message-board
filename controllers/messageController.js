@@ -1,11 +1,24 @@
+const messages = [
+    {
+      text: "Hi there!",
+      user: "Amando",
+      added: new Date()
+    },
+    {
+      text: "Hello World!",
+      user: "Charles",
+      added: new Date()
+    }
+  ];
+
 const message = require('../models/message');
 const asyncHandler = require('express-async-handler');
 
 
 exports.index = asyncHandler(async (req, res, next) => {
-    res.send("NOT IMPLEMENTED: Site Home Page");
+    res.render('index', { title: 'Message Board', messages: messages });
   });
-  
+
 //display all messages
 exports.message_list = asyncHandler(async (req, res, next) => {
     res.send('Not Implemented: Message List')
