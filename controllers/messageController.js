@@ -11,17 +11,21 @@ const messages = [
     }
   ];
 
-const message = require('../models/message');
+const Message = require('../models/message');
 const asyncHandler = require('express-async-handler');
 
 
 exports.index = asyncHandler(async (req, res, next) => {
-    res.render('index', { title: 'Message Board', messages: messages });
+    res.render('index', { title: 'Home', section: 'home', messages: messages });
   });
 
 //display all messages
 exports.message_list = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Message List')
+    const allMessages = await Message.find({}, 'message_text user last_updated')
+        .sort({last_updated: 1})
+        .populate('user')
+        .exec();
+    res.render('index', {title: 'Messages', section: 'message_list', message_list: messages});
 });
 
 //display message create form on GET
@@ -31,6 +35,13 @@ exports.message_create_get = asyncHandler(async (req, res, next) => {
 
 //handle message create on POST
 exports.message_create_post = asyncHandler(async (req, res, next) => {
+    const messageText = req.body['new-msg-input'];
+    const user = req.body['new-msg-user'];
+    messages.push({
+        text: messageText,
+        user: user,
+        added: new Date()
+    });
     res.send('Not Implemented: Message Create POST')
 });
 

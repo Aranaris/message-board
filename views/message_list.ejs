@@ -1,0 +1,4 @@
+<header><%= title  %></header>
+<% for( let index = 0; index < message_list.length; index++ ) { %>
+  <span><%= message_list[index].text %> - <%= message_list[index].user %> (Posted <%= message_list[index].added %>)<br /></span>
+<% } %>

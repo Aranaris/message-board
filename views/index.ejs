@@ -11,8 +11,7 @@
   </head>
   <body>
     <div class='container-fluid'>
-      <h1><%= title %></h1>
-      <p>Welcome to <%= title %></p>
+      <h2>Message Board</h2>
       <div class='row'>
         <div class='col-sm-2'>
           <ul class='sidebar-nav'>
@@ -25,9 +24,7 @@
         </div>
         <div class='col-sm-10'>
           <div class='content'>
-            <% for( let index = 0; index < messages.length; index++ ) { %>
-              <span><%= messages[index].text %> - <%= messages[index].user %> (Posted <%= messages[index].added %>)<br /></span>
-            <% } %>
+            <%- include(section) -%>
           </div>
         </div>
       </div>
