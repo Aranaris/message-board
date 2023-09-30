@@ -21,8 +21,6 @@ async function main() {
     console.log("Debug: Should be connected?");
     await createUsers();
     await createMessages();
-    // await createBooks();
-    // await createBookInstances();
     console.log("Debug: Closing mongoose");
     mongoose.connection.close();
 };
