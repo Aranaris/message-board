@@ -9,15 +9,18 @@ const users = [];
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 
+const dotenv = require('dotenv');
+dotenv.config({path : './.env'});
 const mongoDB = process.env.mongodb_connection;
+
 main().catch((err) => console.log(err));
 
 async function main() {
     console.log("Debug: About to connect");
     await mongoose.connect(mongoDB);
     console.log("Debug: Should be connected?");
-    // await createGenres();
-    // await createAuthors();
+    await createUsers();
+    await createMessages();
     // await createBooks();
     // await createBookInstances();
     console.log("Debug: Closing mongoose");
@@ -51,4 +54,29 @@ async function createUsers() {
         userCreate(0, 'user1', 'testname', '2015-01-01', '1995-12-03'),
         userCreate(1, 'user2', 'testname2'),
     ]);
-}
+};
+
+async function messageCreate(index, message_text, user, added) {
+    const messagedetail = {
+        message_text: message_text,
+        user: user,
+    };
+
+    if (added != false) {
+        messagedetail.added = added;
+    }
+
+    const message = new Message(messagedetail);
+    await message.save();
+    messages[index] = message;
+
+    console.log(`Added message ${message_text}`);
+};
+
+async function createMessages() {
+    console.log('adding messages');
+    await Promise.all([
+        messageCreate(0, 'first!', users[0], '2016-01-23'),
+        messageCreate(1, 'test message', users[1]),
+    ]);
+};
