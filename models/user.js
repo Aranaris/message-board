@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     username: {type: String, required: true, maxLength: 50},
     first_name: {type: String, maxLength: 50},
-    date_of_birth: {type: Date},
     last_activity: {type: Date, default: new Date()},
+    date_of_birth: {type: Date},
 });
 
 userSchema.virtual('name').get(function() {
