@@ -11,7 +11,7 @@ exports.user_list = asyncHandler(async (req, res, next) => {
 
 //display user create form on GET
 exports.user_create_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Create Form GET')
+    res.render('index', {title: 'Add User', section: 'add_user'});
 });
 
 //handle user create on POST

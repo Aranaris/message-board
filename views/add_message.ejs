@@ -1,6 +1,6 @@
-<form method="post" action="/message/create">
-    <header> Header placeholder</header>
+<header><%= title %></header>
+<form method="post" action="/messageboard/message/create">
     <label for="new-msg-input">Enter Message: </label><input id="new-msg-input" type="text" name="new-msg-input">
     <label for="new-msg-user">Username: </label><input id="new-msg-user" type="text" name="new-msg-user">
-    <input type="submit" value="Comment">
+    <input type="submit" value="Comment" class='submit_form'>
 </form>

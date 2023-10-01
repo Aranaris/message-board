@@ -17,7 +17,7 @@ exports.message_list = asyncHandler(async (req, res, next) => {
 
 //display message create form on GET
 exports.message_create_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Message Create Form GET')
+    res.render('index', {title: 'New Message', section: 'add_message'});
 });
 
 //handle message create on POST

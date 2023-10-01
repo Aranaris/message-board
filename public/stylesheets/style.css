@@ -27,3 +27,13 @@ header {
   font-size: large;
   margin-bottom: 20px;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submit_form {
+  max-width: 200px;
+}
