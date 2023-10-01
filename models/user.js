@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { DateTime } = require('luxon');
 
 const Schema = mongoose.Schema;
 
@@ -20,6 +21,14 @@ userSchema.virtual('name').get(function() {
 
 userSchema.virtual('url').get(function() {
     return `/users/profile/${this._id}`;
+});
+
+userSchema.virtual('dob_formatted').get(function() {
+    return DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED);
+});
+
+userSchema.virtual('last_activity_formatted').get(function() {
+    return DateTime.fromJSDate(this.last_activity).toLocaleString(DateTime.DATETIME_MED);
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -1,9 +1,12 @@
-const user = require('../models/user');
+const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
 
 //display all users
 exports.user_list = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User List')
+    const allUsers = await User.find({}, 'username first_name last_activity date_of_birth')
+        .sort({last_activity: 1})
+        .exec();
+    res.render('index', {title: 'Users', section: 'user_list', user_list: allUsers});
 });
 
 //display user create form on GET

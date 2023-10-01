@@ -1,0 +1,9 @@
+<header><%= title  %></header>
+<% for( let index = 0; index < user_list.length; index++ ) { %>
+  <ul>
+    <li>Username: <%= user_list[index].username %></li>
+    <li>First Name: <%= user_list[index].first_name %></li> 
+    <li>DOB: <%= user_list[index].dob_formatted %></li>
+    <li>Last Activity: <%= user_list[index].last_activity_formatted %></li>
+  </ul>
+<% } %>
