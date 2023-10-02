@@ -1,7 +1,18 @@
 <header><%= title %></header>
 <form method="post" action="/messageboard/user/create">
-    <label for="new-username">Username: </label><input id="new-username" type="text" name="new-username">
-    <label for="new-user-firstname">First Name: </label><input id="new-user-firstname" type="text" name="new-user-firstname">
-    <label for="new-user-date-of-birth">DOB: </label><input id="new-user-date-of-birth" type="date" name="new-user-date-of-birth">
+    <label for="new-username">Username: </label>
+    <input id="new-username" type="text" name="new-username" value="<%= (typeof user != 'undefined' ? user.username : '' ) %>">
+    <label for="new-user-firstname">First Name: </label><input id="new-user-firstname" type="text" name="new-user-firstname" value="<%= (typeof user != 'undefined' ? user.first_name : '' ) %>">
+    <label for="new-user-date-of-birth">DOB: </label><input id="new-user-date-of-birth" type="date" name="new-user-date-of-birth" value="<%= (typeof user != 'undefined' ? user.date_of_birth : '' ) %>">
     <input type="submit" value="Add User" class='submit_form'>
 </form>
+<% if (typeof errors != 'undefined') { %>
+    <section class="errors">
+        <ul>
+            <% for( i in errors ) { %>
+                <li><%= errors[i].msg %></li>
+            <% } %>
+        </ul>
+    </section> 
+<% } %>
+

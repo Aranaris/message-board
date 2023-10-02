@@ -35,5 +35,15 @@ form {
 }
 
 .submit_form {
-  max-width: 200px;
+  max-width: 100px;
+}
+
+input, textarea {
+  max-width: 50%;
+}
+
+.errors {
+  padding-top: 20px;
+  color: red;
+  font-weight: bold;
 }

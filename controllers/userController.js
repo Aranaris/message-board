@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 //display all users
 exports.user_list = asyncHandler(async (req, res, next) => {
@@ -15,9 +16,46 @@ exports.user_create_get = asyncHandler(async (req, res, next) => {
 });
 
 //handle user create on POST
-exports.user_create_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Create POST')
-});
+exports.user_create_post = [
+    body('new-username')
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage('Username must be specified.')
+        .isAlphanumeric()
+        .withMessage('Invalid characters.'),
+    body('new-user-firstname')
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage('First name must be specified.')
+        .isAlphanumeric()
+        .withMessage('Invalid characters.'),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        const user = new User({
+            username: req.body['new-username'],
+            first_name: req.body['new-user-firstname'],
+            date_of_birth: req.body['new-user-date-of-birth'],
+        });
+
+        if (!errors.isEmpty()) {
+            console.log(errors);
+            res.render('index', {
+                title: 'Add User',
+                section: 'add_user',
+                user: user,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            await user.save();
+
+            res.redirect(user.url);
+        }
+    }),
+];
 
 //display user delete form on GET
 exports.user_delete_get = asyncHandler(async (req, res, next) => {
