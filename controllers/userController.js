@@ -41,7 +41,6 @@ exports.user_create_post = [
         });
 
         if (!errors.isEmpty()) {
-            console.log(errors);
             res.render('index', {
                 title: 'Add User',
                 section: 'add_user',

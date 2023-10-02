@@ -10,7 +10,7 @@ const messageSchema = new Schema({
 });
 
 messageSchema.virtual('url').get(function() {
-    return `/messages/${this._id}`;
+    return `/messageboard/message/${this._id}`;
 });
 
 messageSchema.virtual('post_date').get(function() {

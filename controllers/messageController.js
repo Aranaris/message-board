@@ -1,5 +1,7 @@
 const Message = require('../models/message');
+const User = require('../models/user');
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 
 exports.index = asyncHandler(async (req, res, next) => {
@@ -17,15 +19,50 @@ exports.message_list = asyncHandler(async (req, res, next) => {
 
 //display message create form on GET
 exports.message_create_get = asyncHandler(async (req, res, next) => {
-    res.render('index', {title: 'New Message', section: 'add_message'});
+    const allUsers = await User.find().exec();
+    
+    res.render('index', {title: 'New Message', section: 'add_message', users: allUsers});
 });
 
 //handle message create on POST
-exports.message_create_post = asyncHandler(async (req, res, next) => {
-    const messageText = req.body['new-msg-input'];
-    const user = req.body['new-msg-user'];
-    res.send('Not Implemented: Message Create POST')
-});
+exports.message_create_post = [
+    body('new-msg-input')
+        .trim()
+        .isLength({ min: 1 })
+        .escape()
+        .withMessage('Message contents cannot be blank.'),
+    body('new-msg-user')
+        .trim()
+        .isLength({ min: 1})
+        .escape()
+        .withMessage('Please input a username'),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        const message = new Message({
+            message_text: req.body['new-msg-input'],
+            user: req.body['new-msg-user'],
+        });
+        
+        if (!errors.isEmpty()) {
+            const allUsers = await User.find().exec();
+
+            res.render('index', {
+                title: 'New Message',
+                section: 'add_message',
+                message: message,
+                users: allUsers,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+
+            await message.save();
+        
+            res.redirect('/messages');
+        }
+    })
+];
 
 //display message delete form on GET
 exports.message_delete_get = asyncHandler(async (req, res, next) => {

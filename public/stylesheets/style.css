@@ -38,7 +38,7 @@ form {
   max-width: 100px;
 }
 
-input, textarea {
+input, textarea, select {
   max-width: 50%;
 }
 
