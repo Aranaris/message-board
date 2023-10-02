@@ -79,5 +79,5 @@ exports.user_update_post = asyncHandler(async (req, res, next) => {
 
 //display specific user on GET
 exports.user_detail = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Detail GET')
+    res.render('index', {title: 'User Profile', section: 'user_profile'})
 });

@@ -20,7 +20,7 @@ userSchema.virtual('name').get(function() {
 });
 
 userSchema.virtual('url').get(function() {
-    return `/users/profile/${this._id}`;
+    return `/messageboard/user/${this._id}`;
 });
 
 userSchema.virtual('dob_formatted').get(function() {
