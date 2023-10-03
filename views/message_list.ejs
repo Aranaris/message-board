@@ -1,4 +1,7 @@
 <header><%= title  %></header>
+<li>
 <% for( let index = 0; index < message_list.length; index++ ) { %>
-  <span>"<%= message_list[index].message_text %>" - <%= message_list[index].user.username %> (Posted <%= message_list[index].post_date %>)<br /></span>
+    <ol class='message'>"<%= message_list[index].message_text %>"<br /> - <%= message_list[index].user.username %> (Posted <%= message_list[index].post_date %>)</ol>
 <% } %>
+</li>
+<a href='/messageboard/message/create'>Add Message</a>
