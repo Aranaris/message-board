@@ -19,7 +19,7 @@ exports.message_list = asyncHandler(async (req, res, next) => {
 
 //display message create form on GET
 exports.message_create_get = asyncHandler(async (req, res, next) => {
-    const allUsers = await User.find().exec();
+    const allUsers = await User.find().sort({ username: 1 }).exec();
     
     res.render('index', {title: 'New Message', section: 'add_message', users: allUsers});
 });
@@ -30,7 +30,7 @@ exports.message_create_post = [
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage('Message contents cannot be blank.'),
+        .withMessage('Message content cannot be blank.'),
     body('new-msg-user')
         .trim()
         .isLength({ min: 1})
@@ -43,14 +43,15 @@ exports.message_create_post = [
             message_text: req.body['new-msg-input'],
             user: req.body['new-msg-user'],
         });
-        
+
         if (!errors.isEmpty()) {
-            const allUsers = await User.find().exec();
+            const allUsers = await User.find().sort({ username: 1 }).exec();
 
             res.render('index', {
                 title: 'New Message',
                 section: 'add_message',
                 message: message,
+                message_user: req.body['new-msg-user'],
                 users: allUsers,
                 errors: errors.array(),
             });
@@ -59,7 +60,7 @@ exports.message_create_post = [
 
             await message.save();
         
-            res.redirect('/messages');
+            res.redirect('/messageboard/messages');
         }
     })
 ];

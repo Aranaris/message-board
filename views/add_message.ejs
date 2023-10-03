@@ -1,10 +1,12 @@
 <header><%= title %></header>
 <form method="post" action="/messageboard/message/create">
-    <label for="new-msg-input">Enter Message: </label><textarea id="new-msg-input" type="text" name="new-msg-input" value="<%= (typeof message != 'undefined' ? message.message_text : '' ) %>"></textarea>
+    <label for="new-msg-input">Enter Message: </label><textarea id="new-msg-input" type="text" name="new-msg-input"><%= (typeof message != 'undefined' ? message.message_text : '' ) %></textarea>
     <label for="new-msg-user">Username: </label>
     <select id="new-msg-user" type="select" name="new-msg-user" required="true" aria-placeholder="Select User">
         <% for( let index = 0; index < users.length; index++ ) { %>
-            <option value='<%= users[index]._id %>'><%= users[index].username %></option>
+            <option value='<%= users[index]._id %>' <% if (typeof message_user != 'undefined' && message_user == users[index]._id) { %>
+                selected
+            <% } %>><%= users[index].username %></option>
         <% } %>
     </select>
     <input type="submit" value="Comment" class='submit_form'>

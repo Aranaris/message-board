@@ -24,7 +24,11 @@ userSchema.virtual('url').get(function() {
 });
 
 userSchema.virtual('dob_formatted').get(function() {
-    return DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED);
+    if (this.date_of_birth) {
+        return DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED);
+    } else {
+        return 'N/A';
+    }
 });
 
 userSchema.virtual('last_activity_formatted').get(function() {
