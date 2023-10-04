@@ -20,14 +20,12 @@ exports.user_create_post = [
     body('new-username')
         .trim()
         .isLength({ min: 1 })
-        .escape()
         .withMessage('Username must be specified.')
         .isAlphanumeric()
         .withMessage('Invalid characters.'),
     body('new-user-firstname')
         .trim()
         .isLength({ min: 1 })
-        .escape()
         .withMessage('First name must be specified.')
         .isAlphanumeric()
         .withMessage('Invalid characters.'),

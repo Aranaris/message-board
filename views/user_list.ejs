@@ -1,9 +1,15 @@
 <header><%= title  %></header>
 <% for( let index = 0; index < user_list.length; index++ ) { %>
+<content class='user-section'>
   <ul>
     <li>Username: <a href='<%= user_list[index].url %>'><%= user_list[index].username %></a></li>
     <li>First Name: <%= user_list[index].first_name %></li> 
     <li>DOB: <%= user_list[index].dob_formatted %></li>
     <li>Last Activity: <%= user_list[index].last_activity_formatted %></li>
   </ul>
+  <a href='/messageboard/user/<%=user_list[index]._id%>/update'>Edit</a>
+  <form method='post' action='/messageboard/user/<%=user_list[index]._id%>/delete'>
+    <input type='submit' name='delete'>Delete</input>
+  </form>
+</content>
 <% } %>

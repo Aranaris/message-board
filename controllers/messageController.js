@@ -29,12 +29,10 @@ exports.message_create_post = [
     body('new-msg-input')
         .trim()
         .isLength({ min: 1 })
-        .escape()
         .withMessage('Message content cannot be blank.'),
     body('new-msg-user')
         .trim()
         .isLength({ min: 1})
-        .escape()
         .withMessage('Please input a username'),
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
