@@ -47,3 +47,7 @@ input, textarea, select {
   color: red;
   font-weight: bold;
 }
+
+.message {
+  padding-bottom: 10px;
+}

@@ -1,7 +1,16 @@
 <header><%= title  %></header>
 <ul>
-  <li>Username: </li>
-  <li>First Name:</li> 
-  <li>DOB:</li>
-  <li>Last Activity:</li>
+  <li>Username: <%= user.username%></li>
+  <li>First Name: <%= user.first_name%></li> 
+  <li>DOB: <%= user.dob_formatted%></li>
+  <li>Last Activity: <%= user.last_activity_formatted%></li>
+  <li><a href='/messageboard/user/<%=user._id%>/update'>Edit</a> || <a href='/messageboard/user/<%=user._id%>/delete'>Delete User</a></li>
 </ul>
+
+<header class='section-header'>User Messages</header>
+
+<ol class='messages'>
+  <% for( let index = 0; index < message_list.length; index++ ) { %>
+      <li class='message'>"<%= message_list[index].message_text %>" - (Posted <%= message_list[index].post_date %>)</li>
+  <% } %>
+</ol>

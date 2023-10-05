@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Message = require('../models/message');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 
@@ -76,5 +77,10 @@ exports.user_update_post = asyncHandler(async (req, res, next) => {
 
 //display specific user on GET
 exports.user_detail = asyncHandler(async (req, res, next) => {
-    res.render('index', {title: 'User Profile', section: 'user_profile'})
+    const user = await User.findById(req.params.id).exec();
+    const userMessages = await Message
+                            .find({user: req.params.id})
+                            .sort({added: 1})
+                            .exec();
+    res.render('index', {title: 'User Profile', section: 'user_profile', user: user, message_list: userMessages});
 });
