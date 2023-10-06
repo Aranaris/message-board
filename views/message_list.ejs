@@ -1,4 +1,4 @@
-<header><%= title  %></header>
+<header>All Messages</header>
 <ol class='messages'>
 <% for( let index = 0; index < message_list.length; index++ ) { %>
     <li class='message'>"<%= message_list[index].message_text %>"<br /> - <%= message_list[index].user.username %> (Posted <%= message_list[index].post_date %>)</li>
