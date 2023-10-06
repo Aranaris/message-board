@@ -1,7 +1,15 @@
 <header>All Messages</header>
 <ol class='messages'>
 <% for( let index = 0; index < message_list.length; index++ ) { %>
-    <li class='message'>"<%= message_list[index].message_text %>"<br /> - <%= message_list[index].user.username %> (Posted <%= message_list[index].post_date %>)</li>
+    <li class='message'>"<%= message_list[index].message_text %>"<br /> - <%= message_list[index].user.username %> (Posted <%= message_list[index].post_date %>)
+    <% if (title == 'User Profile') { %>
+        <a href='/messageboard/message/<%= message_list[index]._id %>/delete'>Delete</a> 
+    <% } else { %>
+        <a href='/messageboard/message/<%= message_list[index]._id %>/update'>Edit</a>
+    <% } %></li>
 <% } %>
 </ol>
-<a href='/messageboard/message/create'>Add Message</a>
+<% if (title != 'User Profile') { %>
+    <a href='/messageboard/message/create'>Add Message</a> 
+<% } %>
+
