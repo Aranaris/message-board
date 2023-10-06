@@ -4,6 +4,28 @@
   <li>First Name: <%= user.first_name%></li> 
   <li>DOB: <%= user.dob_formatted%></li>
   <li>Last Activity: <%= user.last_activity_formatted%></li>
-  <li><a href='/messageboard/user/<%=user._id%>/update'>Edit</a> || <a href='/messageboard/user/<%=user._id%>/delete'>Delete User</a></li>
+  <li><a href='/messageboard/user/<%=user._id%>/update'>Edit</a> || 
+  <% if (typeof delete_mode != 'undefined' && delete_mode) { %>
+    <a href='/messageboard/user/<%=user._id%>/'>Cancel</a></li>
+  <% } else { %>
+    <a href='/messageboard/user/<%=user._id%>/delete'>Delete User</a></li>
+  <% } %>
 </ul>
+<% if (typeof delete_mode != 'undefined' && delete_mode) { %> 
+  <section class='user_prompt'>
+    <form method='post' action='/messageboard/user/<%=user._id%>/delete'>
+      <label for='delete-user'>Are you sure you want to delete this user?</label>
+      <input name='delete-user' type='submit' value='Yes' class='submit_form'>
+    </form>
+  </section>
+<% } %>
+<% if (typeof errors != 'undefined') { %>
+  <section class="errors">
+      <ul>
+          <% for( i in errors ) { %>
+              <li><%= errors[i].msg %></li>
+          <% } %>
+      </ul>
+  </section> 
+<% } %>
 <%- include('message_list') -%>

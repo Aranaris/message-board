@@ -60,12 +60,39 @@ exports.user_create_post = [
 
 //display user delete form on GET
 exports.user_delete_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Delete Form GET')
+    const [user, userMessages] = await Promise.all([
+        User.findById(req.params.id).exec(),
+        Message.find({ user: req.params.id }).sort({ added: 1 }).exec(),
+    ])
+    res.render('index', {
+        title: 'User Profile',
+        section: 'user_profile',
+        user: user,
+        message_list: userMessages,
+        delete_mode: true,
+    })
 });
 
 //handle user delete on POST
 exports.user_delete_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Delete POST')
+    const [user, userMessages] = await Promise.all([
+        User.findById(req.params.id).exec(),
+        Message.find({ user: req.params.id }).sort({ added: 1 }).exec(),
+    ])
+    if ( user === null ) {
+        res.redirect('/messageboard/users/')
+    } else if ( userMessages.length > 0) {
+        res.render('index', {
+            title: 'User Profile',
+            section: 'user_profile',
+            user: user,
+            message_list: userMessages,
+            errors: [{ msg: 'User has messages, please delete all messages before removing this user.'}]
+        })
+    } else {
+        await User.findByIdAndRemove(req.params.id);
+        res.redirect('/messageboard/users/');
+    }
 });
 
 //handle user update form on GET
