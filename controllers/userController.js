@@ -6,7 +6,7 @@ const { body, validationResult } = require('express-validator');
 //display all users
 exports.user_list = asyncHandler(async (req, res, next) => {
     const allUsers = await User.find({}, 'username first_name last_activity date_of_birth')
-        .sort({last_activity: 1})
+        .sort({username: 1})
         .exec();
     res.render('index', {title: 'Users', section: 'user_list', user_list: allUsers});
 });
@@ -75,9 +75,46 @@ exports.user_update_get = asyncHandler(async (req, res, next) => {
 });
 
 //handle user update on POST
-exports.user_update_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Update POST')
-});
+exports.user_update_post = [
+    body('new-username')
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage('Username must be specified.')
+        .isAlphanumeric()
+        .withMessage('Invalid characters.'),
+    body('new-user-firstname')
+        .trim()
+        .isLength({ min: 1 })
+        .withMessage('First name must be specified.')
+        .isAlphanumeric()
+        .withMessage('Invalid characters.'),
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        const user = await User.findById(req.params.id).exec();
+        user.username = req.body['new-username'];
+        user.first_name = req.body['new-user-firstname'];
+        user.last_activity = new Date();
+
+        if (user.dob_formatted) {
+            user.dob_formatted = req.body['new-user-date-of-birth'];
+        }
+
+        if (!errors.isEmpty()) {
+            res.render('index', {
+                title: 'Edit User',
+                section: 'edit_user',
+                user: user,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            await user.save();
+
+            res.redirect(user.url);
+        }
+    }),
+]
 
 //display specific user on GET
 exports.user_detail = asyncHandler(async (req, res, next) => {

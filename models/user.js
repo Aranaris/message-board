@@ -31,7 +31,11 @@ userSchema.virtual('dob_formatted').get(function() {
         return 'N/A';
     }
 }).set(function(v) {
-    this.set({ date_of_birth: DateTime.fromISO(v).toJSDate() });
+    if (v) {
+        this.set({ date_of_birth: DateTime.fromISO(v).toJSDate() });
+    } else if (this.date_of_birth) {
+        this.set({ date_of_birth: null });
+    }
 });
 
 userSchema.virtual('last_activity_formatted').get(function() {
