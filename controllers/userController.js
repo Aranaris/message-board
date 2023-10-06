@@ -36,8 +36,11 @@ exports.user_create_post = [
         const user = new User({
             username: req.body['new-username'],
             first_name: req.body['new-user-firstname'],
-            date_of_birth: req.body['new-user-date-of-birth'],
         });
+
+        if (req.body['new-user-date-of-birth']) {
+            user.dob_formatted = req.body['new-user-date-of-birth'];
+        }
 
         if (!errors.isEmpty()) {
             res.render('index', {
@@ -67,7 +70,8 @@ exports.user_delete_post = asyncHandler(async (req, res, next) => {
 
 //handle user update form on GET
 exports.user_update_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: User Update Form GET')
+    const user = await User.findById(req.params.id).exec();
+    res.render('index', {title: 'Edit User', section: 'edit_user', user: user});
 });
 
 //handle user update on POST
