@@ -1,0 +1,15 @@
+<header><%= title %></header>
+<form method="post" action="/messageboard/message/<%=message._id%>/update">
+    <label for="new-msg-input">Enter Message: </label><textarea id="new-msg-input" type="text" name="new-msg-input"><%= message.message_text %></textarea>
+    <input type="submit" value="Save Edit" class='submit_form'>
+</form>
+<section>(Posted by <%= message.user.username %> on <%= message.post_date %>)</section>
+<% if (typeof errors != 'undefined') { %>
+    <section class="errors">
+        <ul>
+            <% for( i in errors ) { %>
+                <li><%= errors[i].msg %></li>
+            <% } %>
+        </ul>
+    </section> 
+<% } %>
