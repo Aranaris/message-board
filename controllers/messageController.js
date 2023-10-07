@@ -78,7 +78,10 @@ exports.message_delete_get = asyncHandler(async (req, res, next) => {
 
 //handle message delete on POST
 exports.message_delete_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Message Delete POST')
+    const message = await Message.findById(req.params.id).populate('user').exec();
+    const user = message.user;
+    await Message.findByIdAndRemove(req.params.id);
+    res.redirect(`/messageboard/user/${user._id}/`);
 });
 
 //handle message update form on GET
