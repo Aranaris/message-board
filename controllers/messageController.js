@@ -10,7 +10,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 //display all messages
 exports.message_list = asyncHandler(async (req, res, next) => {
-    const allMessages = await Message.find({}, 'message_text user added')
+    const allMessages = await Message.find({}, 'message_text user added edited')
         .sort({added: 1})
         .populate('user')
         .exec();
@@ -29,7 +29,9 @@ exports.message_create_post = [
     body('new-msg-input')
         .trim()
         .isLength({ min: 1 })
-        .withMessage('Message content cannot be blank.'),
+        .withMessage('Message content cannot be blank.')
+        .isLength({ max: 100 })
+        .withMessage('Message must be less than 100 characters.'),
     body('new-msg-user')
         .trim()
         .isLength({ min: 1})
@@ -76,14 +78,41 @@ exports.message_delete_post = asyncHandler(async (req, res, next) => {
 //handle message update form on GET
 exports.message_update_get = asyncHandler(async (req, res, next) => {
     const message = await Message.findById(req.params.id).populate('user').exec();
-    
+
     res.render('index', {title: 'Edit Message', section: 'edit_message', message: message });
 });
 
 //handle message update on POST
-exports.message_update_post = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Message Update POST')
-});
+exports.message_update_post = [
+    body('new-msg-input')
+        .trim()
+        .isLength({ min: 1})
+        .withMessage('Message content cannot be blank')
+        .isLength({ max: 100 })
+        .withMessage('Message must be less than 100 characters.'),
+    asyncHandler(async function(req, res, next) {
+        const errors = validationResult(req);
+
+        const message = await Message.findById(req.params.id).populate('user').exec();
+        
+        if (!errors.isEmpty()) {
+            res.render('index', {
+                title: 'Edit Message', 
+                section: 'edit_message', 
+                message: message,
+                errors: errors.array(),
+            });
+            return;
+        } else {
+            message.message_text = req.body['new-msg-input'];
+            message.edited = new Date();
+
+            await message.save();
+
+            res.redirect('/messageboard/messages');
+        };
+    }),
+]
 
 //display specific message on GET
 exports.message_detail = asyncHandler(async (req, res, next) => {

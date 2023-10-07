@@ -37,14 +37,6 @@ form {
   font-weight: bold;
 }
 
-.submit_form {
-  max-width: 150px;
-}
-
-input, textarea, select {
-  max-width: 50%;
-}
-
 .errors {
   padding-top: 20px;
   color: red;
@@ -52,5 +44,16 @@ input, textarea, select {
 }
 
 .message {
-  padding-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-bottom: solid 1px black;
+}
+
+.edit-text {
+  font-style: italic;
+  color: #808080;
+}
+
+.message-details {
+  font-size: small;
 }

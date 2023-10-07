@@ -7,6 +7,7 @@ const messageSchema = new Schema({
     message_text: {type: String, required: true, maxLength: 100},
     user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
     added: {type: Date, default: new Date()},
+    edited: {type: Date},
 });
 
 messageSchema.virtual('url').get(function() {
@@ -15,6 +16,10 @@ messageSchema.virtual('url').get(function() {
 
 messageSchema.virtual('post_date').get(function() {
     return DateTime.fromJSDate(this.added).toLocaleString(DateTime.DATETIME_MED);
+})
+
+messageSchema.virtual('edit_date').get(function() {
+    return DateTime.fromJSDate(this.edited).toLocaleString(DateTime.DATETIME_MED);
 })
 
 module.exports = mongoose.model('Message', messageSchema);
