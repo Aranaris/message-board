@@ -67,7 +67,13 @@ exports.message_create_post = [
 
 //display message delete form on GET
 exports.message_delete_get = asyncHandler(async (req, res, next) => {
-    res.send('Not Implemented: Message Delete Form GET')
+    const message = await Message.findById(req.params.id).populate('user').exec();
+    const user = await User.findById(message.user._id).exec();
+    const userMessages = await Message
+                            .find({user: user._id})
+                            .sort({added: 1})
+                            .exec();
+    res.render('index', {title: 'User Profile', section: 'user_profile', user: user, message_list: userMessages, msg_delete_id: req.params.id});
 });
 
 //handle message delete on POST

@@ -9,6 +9,14 @@
         <a href='/messageboard/message/<%= message_list[index]._id %>/delete'>Delete</a> 
     <% } else { %>
         <a href='/messageboard/message/<%= message_list[index]._id %>/update'>Edit</a>
+    <% } %>
+    <% if (typeof msg_delete_id != 'undefined' && msg_delete_id == message_list[index]._id) { %> 
+        <section class='user_prompt'>
+          <form method='post' action='/messageboard/message/<%=message_list[index]._id%>/delete'>
+            <label for='delete-msg'>Are you sure you want to delete this message?</label>
+            <input name='delete-msg' type='submit' value='Yes' class='submit_form'>
+          </form>
+        </section>
     <% } %></li>
 <% } %>
 </ol>
