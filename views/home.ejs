@@ -1,2 +1,17 @@
 <header><%= title %></header>
-<p>Feel free to view messages via the Messages link and add your own!</p>
+<% if(typeof user != 'undefined') { %>
+    <p>Feel free to view messages via the Messages link and add your own!</p>
+<% } else { %>
+    <form action="/log-in" method="POST">
+        <section>
+            <label for="username">Username: </label><br />
+            <input name="username" placeholder="username" type="text" />
+        </section>
+        <section>
+            <label for="password">Password: </label><br />
+            <input name="password" type="password" />
+        </section>
+        <input type='submit' value='Log In' />
+    </form>
+<% } %>
+

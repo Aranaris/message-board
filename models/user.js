@@ -1,15 +1,36 @@
 const mongoose = require('mongoose');
 const { DateTime } = require('luxon');
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
 const opts = { toJSON: {virtuals: true }};
 const userSchema = new Schema({
-    username: {type: String, required: true, maxLength: 50},
+    username: {type: String, required: true, unique: true, dropDups: true, maxLength: 50},
+    password: {type: String, required: true, default: 'password', maxLength: 50},
     first_name: {type: String, maxLength: 50},
     last_activity: {type: Date, default: new Date()},
     date_of_birth: {type: Date},
 }, opts);
+
+userSchema.method('setPassword', async function(password) {
+    try {
+        bcrypt.hash(password, 10, async (err, hashedPassword) => {
+            if(err) {
+                console.log(err);
+            } else {
+                this.password = hashedPassword;
+            }
+        });
+    } catch(err) {
+        return next(err);
+    }
+});
+
+userSchema.method('validatePassword', async function(password) {
+    const match = await bcrypt.compare(password, this.password);
+    return match;
+})
 
 userSchema.virtual('name').get(function() {
     let name = "";

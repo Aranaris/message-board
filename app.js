@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
@@ -17,7 +18,7 @@ const mongoDB = process.env.mongodb_connection;
 
 main().catch((err) => console.log(err));
 async function main() {
-  await mongoose.connect(mongoDB);
+  await mongoose.connect(mongoDB, { useUnifiedTopology: true, useNewUrlParser: true });
 }
 
 // view engine setup
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 
 app.use('/', indexRouter);
 app.use('/messageboard', messageBoardRouter);
