@@ -2,7 +2,7 @@
 <% if(typeof user != 'undefined') { %>
     <p>Feel free to view messages via the Messages link and add your own!</p>
 <% } else { %>
-    <form action="/log-in" method="POST">
+    <form action="/auth/log-in" method="POST">
         <section>
             <label for="username">Username: </label><br />
             <input name="username" placeholder="username" type="text" />
