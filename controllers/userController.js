@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Message = require('../models/message');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const passport = require('passport');
 
 //display all users
 exports.user_list = asyncHandler(async (req, res, next) => {
@@ -152,3 +153,10 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
                             .exec();
     res.render('index', {title: 'User Profile', section: 'user_profile', user: user, message_list: userMessages});
 });
+
+//user auth
+exports.user_authenticate_post = passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/',
+        failureFlash: true
+    });

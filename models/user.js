@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const opts = { toJSON: {virtuals: true }};
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true, dropDups: true, maxLength: 50},
-    password: {type: String, required: true, default: 'password', maxLength: 50},
+    password: {type: String, required: true, default: 'password', maxLength: 100},
     first_name: {type: String, maxLength: 50},
     last_activity: {type: Date, default: new Date()},
     date_of_birth: {type: Date},

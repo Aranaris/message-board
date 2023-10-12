@@ -14,4 +14,13 @@
         <input type='submit' value='Log In' />
     </form>
 <% } %>
+<% if (typeof errors != 'undefined') { %>
+    <section class="errors">
+        <ul>
+            <% for( i in errors ) { %>
+                <li><%= errors[i] %></li>
+            <% } %>
+        </ul>
+    </section> 
+<% } %>
 

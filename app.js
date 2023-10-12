@@ -4,16 +4,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var flash = require('connect-flash');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var messageBoardRouter = require('./routes/messageboard');
 var authRouter = require('./routes/auth');
+require('./config/passport');
 
 var app = express();
 
 // Set up mongoose connection
 const mongoose = require("mongoose");
+const passport = require('passport');
 mongoose.set("strictQuery", false);
 const mongoDB = process.env.mongodb_connection;
 
@@ -33,9 +36,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+app.use(express.urlencoded({ extended: false }));
+
 app.use('/', indexRouter);
 app.use('/messageboard', messageBoardRouter);
 app.use('/auth', authRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
