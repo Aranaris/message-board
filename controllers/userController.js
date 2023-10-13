@@ -166,7 +166,7 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 exports.user_authenticate_post = passport.authenticate('local', {
         successRedirect: '/',
         failureRedirect: '/',
-        failureFlash: true
+        failureFlash: true,
     });
 
 exports.user_logout_get = asyncHandler(async (req, res, next) => {

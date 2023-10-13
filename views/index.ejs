@@ -22,13 +22,13 @@
             <li><a href='/messageboard/message/create'>Add New Message</a></li>
           </ul>
         </div>
-        <div class='col-sm-10'>
+        <div class='col-sm-8'>
           <div class='content'>
             <%- include(section) -%>
           </div>
-          <div class='logout'>
-            <a href='/auth/log-out'><%= (typeof loggedinuser != 'undefined' ? 'Log Out' : '') %></a>
-          </div>
+        </div>
+        <div class='col-sm-2'>
+          <%- include('login_form') -%>
         </div>
       </div>
     </div>

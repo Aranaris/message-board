@@ -1,0 +1,22 @@
+<% if(typeof loggedinuser != 'undefined') { %>
+    <p><%= loggedinuser.username %> - signed in</p>
+    <a href='/auth/log-out'>Log Out</a>
+<% } else { %>
+    <form action="/auth/log-in" method="POST">
+        <section>
+            <label for="username">Username: </label><br />
+            <input tabindex='1' name="username" placeholder="username" type="text" />
+        </section>
+        <section>
+            <label for="password">Password: </label><br />
+            <input tabindex='2' name="password" type="password" />
+        </section>
+        <input tabindex='3' type='submit' value='Log In' />
+    </form>
+    <p>Not a member? <a href='/messageboard/user/create'>Sign up</a>!</p>
+<% } %>
+<% if (typeof error_message != 'undefined') { %>
+    <section class="errors">
+        <%= error_message %>
+    </section> 
+<% } %>
