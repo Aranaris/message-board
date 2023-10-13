@@ -26,6 +26,9 @@
           <div class='content'>
             <%- include(section) -%>
           </div>
+          <div class='logout'>
+            <a href='/auth/log-out'><%= (typeof loggedinuser != 'undefined' ? 'Log Out' : '') %></a>
+          </div>
         </div>
       </div>
     </div>

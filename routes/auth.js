@@ -9,13 +9,6 @@ router.get('/log-in', (req, res, next) => {
 
 router.post('/log-in', user_controller.user_authenticate_post);
 
-router.get("/log-out", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-        return next(err);
-        }
-        res.redirect("/");
-    });
-});
+router.get('/log-out', user_controller.user_logout_get);
 
 module.exports = router;
