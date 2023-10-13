@@ -1,6 +1,6 @@
 <header><%= title %></header>
-<% if(typeof user != 'undefined') { %>
-    <p>Feel free to view messages via the Messages link and add your own!</p>
+<% if(typeof loggedinuser != 'undefined') { %>
+    <p>Welcome <%= loggedinuser.first_name %>, feel free to view messages via the Messages link and add your own!</p>
 <% } else { %>
     <form action="/auth/log-in" method="POST">
         <section>

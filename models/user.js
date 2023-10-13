@@ -22,9 +22,13 @@ userSchema.method('setPassword', async function(password) {
     }
 });
 
-userSchema.method('validatePassword', async function(password) {
-    const match = await bcrypt.compare(password, this.password);
-    return match;
+userSchema.method('validatePassword', function(password) {
+    try {
+        const match = bcrypt.compare(password, this.password);
+        return match;
+    } catch(err) {
+        return next(err);
+    }
 })
 
 userSchema.virtual('name').get(function() {
