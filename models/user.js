@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const opts = { toJSON: {virtuals: true }};
 const userSchema = new Schema({
     username: {type: String, required: true, unique: true, dropDups: true, maxLength: 50},
-    password: {type: String, required: true, default: 'password', maxLength: 100},
+    password: {type: String, maxLength: 100},
     first_name: {type: String, maxLength: 50},
     last_activity: {type: Date, default: new Date()},
     date_of_birth: {type: Date},
@@ -15,13 +15,8 @@ const userSchema = new Schema({
 
 userSchema.method('setPassword', async function(password) {
     try {
-        bcrypt.hash(password, 10, async (err, hashedPassword) => {
-            if(err) {
-                console.log(err);
-            } else {
-                this.password = hashedPassword;
-            }
-        });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        this.password = hashedPassword;
     } catch(err) {
         return next(err);
     }

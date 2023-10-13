@@ -2,6 +2,8 @@
 <form method="post" action="/messageboard/user/<%=user._id%>/update">
     <label for="new-username">Username: </label>
     <input id="new-username" type="text" name="new-username" value="<%= (typeof user != 'undefined' ? user.username : '' ) %>">
+    <label for="new-password">Password: </label>
+    <input id="new-password" type="password" name="new-password" value="<%= (typeof user != 'undefined' ? user.password : '' ) %>">
     <label for="new-user-firstname">First Name: </label><input id="new-user-firstname" type="text" name="new-user-firstname" value="<%= (typeof user != 'undefined' ? user.first_name : '' ) %>">
     <label for="new-user-date-of-birth">DOB: </label><input id="new-user-date-of-birth" type="date" name="new-user-date-of-birth" value="<%= (typeof user != 'undefined' ? user.dob_formatted : '' ) %>">
     <input type="submit" value="Save Changes" class='submit_form'>

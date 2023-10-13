@@ -41,7 +41,8 @@ exports.user_create_post = [
 
         if (req.body['new-user-date-of-birth']) {
             user.dob_formatted = req.body['new-user-date-of-birth'];
-        }
+        };
+
 
         if (!errors.isEmpty()) {
             res.render('index', {
@@ -116,6 +117,10 @@ exports.user_update_post = [
         .withMessage('First name must be specified.')
         .isAlphanumeric()
         .withMessage('Invalid characters.'),
+    body('new-password')
+        .trim()
+        .isLength({ max: 50 })
+        .withMessage('Password must be less than 50 characters.'),
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
 
@@ -137,6 +142,9 @@ exports.user_update_post = [
             });
             return;
         } else {
+            if (req.body['new-password']) {
+                await user.setPassword(req.body['new-password']);
+            }
             await user.save();
 
             res.redirect(user.url);
