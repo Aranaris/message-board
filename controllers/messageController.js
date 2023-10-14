@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator');
 
 
 exports.index = asyncHandler(async (req, res, next) => {
-    res.render('index', { title: 'Home', section: 'home', loggedinuser: req.user, error_message: req.flash('error') });
+    res.render('index', { title: 'Home', section: 'home', error_message: req.flash('error') });
   });
 
 //display all messages
