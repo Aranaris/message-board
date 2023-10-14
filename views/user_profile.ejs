@@ -4,6 +4,7 @@
   <li>First Name: <%= user.first_name%></li> 
   <li>DOB: <%= user.dob_formatted%></li>
   <li>Last Activity: <%= user.last_activity_formatted%></li>
+  <li>User Status: <%= (typeof user.role != 'undefined' ? user.role.role_name : 'Unconfigured' ) %></li>
   <li><a href='/messageboard/user/<%=user._id%>/update'>Edit</a> || 
   <% if (typeof delete_mode != 'undefined' && delete_mode) { %>
     <a href='/messageboard/user/<%=user._id%>/'>Cancel</a></li>

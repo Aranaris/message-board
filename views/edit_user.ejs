@@ -6,6 +6,14 @@
     <input id="new-password" type="password" name="new-password" value="<%= (typeof user != 'undefined' ? user.password : '' ) %>">
     <label for="new-user-firstname">First Name: </label><input id="new-user-firstname" type="text" name="new-user-firstname" value="<%= (typeof user != 'undefined' ? user.first_name : '' ) %>">
     <label for="new-user-date-of-birth">DOB: </label><input id="new-user-date-of-birth" type="date" name="new-user-date-of-birth" value="<%= (typeof user != 'undefined' ? user.dob_formatted : '' ) %>">
+    <label for='new-user-role'>User Status: </label>
+    <select id='new-user-role' name='new-user-role'>
+        <% for( let index = 0; index < rolelist.length; index++ ) { %>
+            <option value='<%= rolelist[index].id %>' <% if(typeof user != 'undefined' && user.role == rolelist[index].id) { %>
+                selected
+            <% } %> > <%= rolelist[index].role_name %></option>
+        <% } %>
+    </select>
     <input type="submit" value="Save Changes" class='submit_form'>
 </form>
 <% if (typeof errors != 'undefined') { %>

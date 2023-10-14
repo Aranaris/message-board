@@ -10,6 +10,7 @@ const userSchema = new Schema({
     password: {type: String, maxLength: 100},
     first_name: {type: String, maxLength: 50},
     last_activity: {type: Date, default: new Date()},
+    role: { type: Schema.Types.ObjectId, ref: 'Role' },
     date_of_birth: {type: Date},
 }, opts);
 

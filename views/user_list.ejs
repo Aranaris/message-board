@@ -5,5 +5,6 @@
   <li>First Name: <%= user_list[index].first_name %></li> 
   <li>DOB: <%= user_list[index].dob_formatted %></li>
   <li>Last Activity: <%= user_list[index].last_activity_formatted %></li>
+  <li>User Status: <%= (typeof user_list[index].role != 'undefined' ? user_list[index].role.role_name : 'Unconfigured' ) %></li>
 </ul>
 <% } %>
