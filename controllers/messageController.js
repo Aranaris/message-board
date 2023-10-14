@@ -21,7 +21,7 @@ exports.message_list = asyncHandler(async (req, res, next) => {
 exports.message_create_get = asyncHandler(async (req, res, next) => {
     const allUsers = await User.find().sort({ username: 1 }).exec();
     
-    res.render('index', {title: 'New Message', section: 'add_message', users: allUsers});
+    res.render('index', {title: 'New Message', section: 'add_message' });
 });
 
 //handle message create on POST
@@ -32,27 +32,20 @@ exports.message_create_post = [
         .withMessage('Message content cannot be blank.')
         .isLength({ max: 100 })
         .withMessage('Message must be less than 100 characters.'),
-    body('new-msg-user')
-        .trim()
-        .isLength({ min: 1})
-        .withMessage('Please input a username'),
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
 
         const message = new Message({
             message_text: req.body['new-msg-input'],
-            user: req.body['new-msg-user'],
+            user: req.user,
         });
 
         if (!errors.isEmpty()) {
-            const allUsers = await User.find().sort({ username: 1 }).exec();
 
             res.render('index', {
                 title: 'New Message',
                 section: 'add_message',
                 message: message,
-                message_user: req.body['new-msg-user'],
-                users: allUsers,
                 errors: errors.array(),
             });
             return;

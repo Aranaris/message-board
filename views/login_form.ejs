@@ -1,5 +1,5 @@
 <% if(typeof loggedInUser != 'undefined') { %>
-    <p><%= loggedInUser.username %> - signed in</p>
+    <header><%= loggedInUser.username %></header>
     <a href='/auth/log-out'>Log Out</a>
 <% } else { %>
     <form action="/auth/log-in" method="POST">
