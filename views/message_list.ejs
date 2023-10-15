@@ -1,7 +1,7 @@
 <header>All Messages</header>
 <ol class='messages'>
 <% for( let index = 0; index < message_list.length; index++ ) { %>
-    <li class='message'>"<%= message_list[index].message_text %>"<br /> <span class='message-details'>- <%= (typeof loggedInUser != 'undefined' ? message_list[index].user.username : 'Anonymous User') %> (Posted <%= message_list[index].post_date %>)
+    <li class='message'>"<%= message_list[index].message_text %>"<br /> <span class='message-details'>- <%= (typeof loggedInUser != 'undefined' ? message_list[index].user.username : 'Anonymous *login to view user info*') %> (Posted <%= message_list[index].post_date %>)
     <% if (typeof message_list[index].edited != 'undefined') { %>
      <span class='edit-text'>*Edited on <%= message_list[index].edit_date %></span>
     <% } %></span>
