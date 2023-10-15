@@ -169,11 +169,18 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 });
 
 //user auth
+
+exports.get_referrer = asyncHandler(async (req, res, next) => {
+    req.session.returnTo = req.get('Referrer');
+    next();
+});
+
 exports.user_authenticate_post = passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/',
+        successReturnToOrRedirect: '/auth/log-in',
+        failureRedirect: '/auth/log-in',
         failureFlash: true,
-    });
+        keepSessionInfo: true, // using for now, appears to be an active PR https://github.com/jaredhanson/passport/pull/941
+});
 
 exports.user_logout_post = asyncHandler(async (req, res, next) => {
     req.logout((err) => {

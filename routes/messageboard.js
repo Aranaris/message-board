@@ -4,6 +4,7 @@ const router = express.Router();
 const message_controller = require('../controllers/messageController');
 const user_controller = require('../controllers/userController');
 
+// authentication and authorization logic. TODO: find a better way to organize this code
 const isLoggedIn = function (req, res, next){
     if (req.user) {
         next();
@@ -11,8 +12,17 @@ const isLoggedIn = function (req, res, next){
         res.render('index', { title:'Access Denied', section: 'access_denied' });
     }
 }
+
+const checkAuthz = function (req, res, next){
+    if (req.user) {
+        next();
+    } else {
+
+    }
+}
+
 // GET catalog home page.
-router.get("/", message_controller.index);
+router.get('/', message_controller.index);
 
 //User routes
 router.get('/user/create', user_controller.user_create_get);
