@@ -9,7 +9,7 @@ const isLoggedIn = function (req, res, next){
     if (req.user) {
         next();
     } else {
-        res.render('index', { title:'Access Denied', section: 'access_denied' });
+        res.render('index', { title:'Access Denied', section: 'access_denied', error_message: req.flash('error') });
     }
 }
 

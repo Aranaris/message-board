@@ -14,14 +14,14 @@ exports.message_list = asyncHandler(async (req, res, next) => {
         .sort({added: 1})
         .populate('user')
         .exec();
-    res.render('index', {title: 'Messages', section: 'message_list', message_list: allMessages});
+    res.render('index', {title: 'Messages', section: 'message_list', message_list: allMessages, error_message: req.flash('error') });
 });
 
 //display message create form on GET
 exports.message_create_get = asyncHandler(async (req, res, next) => {
     const allUsers = await User.find().sort({ username: 1 }).exec();
     
-    res.render('index', {title: 'New Message', section: 'add_message' });
+    res.render('index', {title: 'New Message', section: 'add_message', error_message: req.flash('error') });
 });
 
 //handle message create on POST

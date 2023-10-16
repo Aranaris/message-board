@@ -11,12 +11,12 @@ exports.user_list = asyncHandler(async (req, res, next) => {
         .sort({username: 1})
         .populate('role')
         .exec();
-    res.render('index', {title: 'Users', section: 'user_list', user_list: allUsers});
+    res.render('index', {title: 'Users', section: 'user_list', user_list: allUsers, error_message: req.flash('error')});
 });
 
 //display user create form on GET
 exports.user_create_get = asyncHandler(async (req, res, next) => {
-    res.render('index', {title: 'Add User', section: 'add_user'});
+    res.render('index', {title: 'Add User', section: 'add_user', error_message: req.flash('error')});
 });
 
 //handle user create on POST
